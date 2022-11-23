@@ -1,20 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { MD3DarkTheme as DefaultTheme, Provider as PaperProvider, Text } from "react-native-paper";
+import Stopwatch from './src/Stopwatch'
+
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: "#212121",
+    onBackground: "#424242",
+
+    // surface: "#212121",
+    // onSurface: "#212121",
+
+    // surfaceVariant: "#212121",
+    // onSurfaceVariant: "#212121",
+
+    primary: "#FAFAFA",
+    onPrimary: "#FFFFFF",
+    // primaryContainer: "#FFFFFF",
+    // onPrimaryContainer: "#FFFFFF",
+
+    // secondary: "#FAFAFA",
+    // onSecondary: "#FFFFFF",
+    // secondaryContainer: "#FFFFFF",
+    // onSecondaryContainer: "#FFFFFF",
+
+    // tertiary: "#FFFFFF",
+    // onTertiary: "#FFFFFF",
+    // tertiaryContainer: "#FFFFFF",
+    // onTertiaryContainer: "#FFFFFF",
+  }
+}
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <PaperProvider theme={theme}>
+      <Stopwatch />
+    </PaperProvider>
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
