@@ -1,5 +1,6 @@
 import { MD3DarkTheme as DefaultTheme, Provider as PaperProvider, Text } from "react-native-paper";
 import Stopwatch from './src/Stopwatch'
+import { WeightLogger } from "./src/WeightLogger";
 
 const theme = {
   ...DefaultTheme,
@@ -34,7 +35,8 @@ const theme = {
 export default function App() {
   return (
     <PaperProvider theme={theme}>
-      <Stopwatch />
+      {/* <Stopwatch /> */}
+      <WeightLogger />
     </PaperProvider>
   )
 }

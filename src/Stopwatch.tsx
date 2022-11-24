@@ -32,7 +32,6 @@ export default function Stopwatch() {
     }
   })
 
-
   return (
     <View style={styles.container}>
       <TouchableHighlight style={styles.button} onPress={isRunning ? pause : start} onLongPress={e => reset(undefined, false)} underlayColor={isRunning ? theme.colors.onPrimary : theme.colors.onBackground}>
