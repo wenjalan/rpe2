@@ -17,7 +17,8 @@
     "react-native": "0.70.5",
     "react-native-paper": "^5.0.0-rc.10",
     "react-native-web": "~0.18.9",
-    "react-timer-hook": "^3.0.5"
+    "react-timer-hook": "^3.0.5",
+    "expo-dev-client": "~2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

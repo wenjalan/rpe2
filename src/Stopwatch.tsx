@@ -18,7 +18,7 @@ export default function Stopwatch() {
     button: {
       height: Dimensions.get('window').width * 0.8,
       width: Dimensions.get('window').width * 0.8,
-      backgroundColor: isRunning ? theme.colors.background : theme.colors.primary,
+      backgroundColor: isRunning ? theme.colors.primary : theme.colors.background,
       borderWidth: 1,
       borderColor: theme.colors.primary,
       borderRadius: Dimensions.get('window').width * 0.8,
@@ -27,7 +27,7 @@ export default function Stopwatch() {
     },
 
     stopwatchLabel: {
-      color: isRunning ? theme.colors.primary : theme.colors.background,
+      color: isRunning ? theme.colors.background : theme.colors.primary,
       fontSize: 0.1 * Dimensions.get('window').width
     }
   })
@@ -35,7 +35,7 @@ export default function Stopwatch() {
 
   return (
     <View style={styles.container}>
-      <TouchableHighlight style={styles.button} onPress={isRunning ? pause : start} onLongPress={e => reset(undefined, false)} underlayColor={isRunning ? theme.colors.onBackground : theme.colors.onPrimary}>
+      <TouchableHighlight style={styles.button} onPress={isRunning ? pause : start} onLongPress={e => reset(undefined, false)} underlayColor={isRunning ? theme.colors.onPrimary : theme.colors.onBackground}>
         <Text style={styles.stopwatchLabel}>{format(minutes, seconds)}</Text>
       </TouchableHighlight>
     </View>
