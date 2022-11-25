@@ -35,8 +35,7 @@ const theme = {
 export default function App() {
   return (
     <PaperProvider theme={theme}>
-      {/* <Stopwatch /> */}
-      <WeightLogger />
+      <Stopwatch />
     </PaperProvider>
   )
 }

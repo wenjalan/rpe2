@@ -1,9 +1,17 @@
 import { useTheme, Dialog, Button, IconButton } from "react-native-paper"
-import { Text, View, StyleSheet, Dimensions } from "react-native"
+import { Text, View, StyleSheet, Dimensions, TouchableHighlight } from "react-native"
 import { useState } from "react"
 import NumericInput from 'react-native-numeric-input'
+import { RPEButton } from "./RPEButton"
 
-export function WeightLogger() {
+interface WeightLoggerProps {
+  visible: boolean,
+  weight?: number,
+  reps?: number,
+  onComplete: (weight: number, reps: number) => void
+}
+
+export function WeightLogger(props: WeightLoggerProps) {
   const theme = useTheme()
 
   const styles = StyleSheet.create({
@@ -18,16 +26,10 @@ export function WeightLogger() {
       backgroundColor: theme.colors.onBackground,
     },
 
-    dialogContent: {
+    dialogContainer: {
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center"
-    },
-
-    dialogActions: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
     },
 
     inputContainer: {
@@ -46,34 +48,27 @@ export function WeightLogger() {
     },
   })
 
-  const [weight, setWeight] = useState(0)
-  const [reps, setReps] = useState(0)
+  const [weight, setWeight] = useState(props.weight ?? 0)
+  const [reps, setReps] = useState(props.reps ?? 0)
 
   return (
-    <View style={styles.container}>
-      <Dialog style={styles.dialog} visible={true} onDismiss={() => { }}>
-        <Dialog.Content style={styles.dialogContent}>
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Weight</Text>
-            <NumberInput value={weight} setValue={setWeight} step={5} min={0} max={1000} />
-          </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Reps</Text>
-            <NumberInput value={reps} setValue={setReps} step={1} min={0} max={100} />
-          </View>
-          <IconButton
-            size={Dimensions.get('window').width / 8}
-            iconColor={theme.colors.primary}
-            icon="check-circle"
-          />
-        </Dialog.Content>
-      </Dialog>
-    </View>
+    <Dialog style={styles.dialog} visible={props.visible} onDismiss={() => { props.onComplete(weight, reps) }}>
+      <Dialog.Content style={styles.dialogContainer}>
+        <View style={styles.inputContainer}>
+          <NumberInput units="lbs." value={weight} setValue={setWeight} step={5} min={0} max={1000} />
+        </View>
+        <View style={styles.inputContainer}>
+          <NumberInput units="reps" value={reps} setValue={setReps} step={1} min={0} max={100} />
+        </View>
+        <RPEButton label="DONE" onPress={() => props.onComplete(weight, reps)} />
+      </Dialog.Content>
+    </Dialog>
   )
 }
 
 interface NumberInputProps {
   value: number
+  units?: string
   setValue: (v: number) => void
   min?: number
   max?: number
@@ -101,7 +96,7 @@ function NumberInput(props: NumberInputProps) {
     value: {
       textAlign: "center",
       color: theme.colors.primary,
-      fontSize: 0.1 * Dimensions.get('window').width,
+      fontSize: 0.05 * Dimensions.get('window').width,
       width: Dimensions.get('window').width / 4
     },
 
@@ -114,22 +109,23 @@ function NumberInput(props: NumberInputProps) {
 
   const min = props.min ?? -Infinity
   const max = props.max ?? Infinity
+  const units = props.units ? ' ' + props.units : ''
 
   return (
     <View style={styles.container}>
       <IconButton
         size={Dimensions.get('window').width / 8}
         iconColor={theme.colors.primary}
-        icon="arrow-left-drop-circle"
+        icon="chevron-left"
         onPress={() => props.value > min ? props.setValue(props.value - props.step) : {}}
-        />
+      />
       <View style={styles.valueContainer}>
-        <Text style={styles.value}>{props.value}</Text>
+        <Text style={styles.value}>{`${props.value}${units}`}</Text>
       </View>
       <IconButton
         size={Dimensions.get('window').width / 8}
         iconColor={theme.colors.primary}
-        icon="arrow-right-drop-circle"
+        icon="chevron-right"
         onPress={() => props.value < max ? props.setValue(props.value + props.step) : {}}
       />
     </View>
