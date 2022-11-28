@@ -4,6 +4,7 @@ import { Text, useTheme, IconButton } from "react-native-paper"
 import { useStopwatch } from "react-timer-hook"
 import { RPEButton } from "./RPEButton"
 import { WeightLogger } from "./WeightLogger"
+import { brzycki } from "./Utils"
 
 export default function Stopwatch() {
   const { seconds, minutes, isRunning, start, pause, reset } = useStopwatch({ autoStart: false })
@@ -76,7 +77,7 @@ export default function Stopwatch() {
         </View>
       </TouchableHighlight>
       <WeightLogger visible={showLogger} onComplete={(weight, reps) => {
-        const newLogs = [...logs, `${weight} for ${reps}`]
+        const newLogs = [...logs, `${weight} for ${reps} (${Math.round(brzycki(weight, reps))})`]
         setLogs(newLogs)
         setShowLogger(false)
       }} />
